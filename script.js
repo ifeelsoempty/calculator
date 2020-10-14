@@ -35,11 +35,12 @@ class Calculator {
       return;
     }
     if (this.currentOperand === "") return;
-    if (
-      operation === "√" &&
-      Math.abs(this.currentOperand) !== this.currentOperand
-    ) {
-      this.currentOperand = Math.sqrt(this.currentOperand);
+    if (operation === "√") {
+      if (Math.abs(this.currentOperand) == this.currentOperand) {
+        this.currentOperand = Math.sqrt(this.currentOperand);
+      } else {
+        this.currentOperand = "Error";
+      }
       this.operation = operation;
       this.readyToReset = true;
     } else {
@@ -103,9 +104,10 @@ class Calculator {
   }
 
   updateDisplay() {
-    this.currentOperandTextElement.innerText = this.getDisplayNumber(
-      this.currentOperand
-    );
+    this.currentOperandTextElement.innerText =
+      this.currentOperand === "Error"
+        ? "Error"
+        : this.getDisplayNumber(this.currentOperand);
     if (this.operation != null && this.operation !== "√") {
       this.previousOperandTextElement.innerText = `${this.getDisplayNumber(
         this.previousOperand
